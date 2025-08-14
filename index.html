@@ -1,149 +1,304 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
+<html><head><base href="OPINFO.html"><title>OpInfo</title>
+<script language=javascript>
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpInfo - GeoInt 2025</title>
-<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light.css">
 <script src="https://unpkg.com/@popperjs/core@2"></script>
 <script src="https://unpkg.com/tippy.js@6"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
+<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light.css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
 :root {
   --bg-color: #1e1e1e;
   --text-color: #d4d4d4;
   --primary-color: #007acc;
   --secondary-color: #252526;
   --accent-color: #569cd6;
+  --error-color: #f48771;
+  --success-color: #6a9955;
   --warning-color: #ce9178;
 }
 body.light-mode {
-  --bg-color: #fff;
-  --text-color: #000;
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --primary-color: #007acc;
   --secondary-color: #f3f3f3;
   --accent-color: #0000ff;
+  --r-color: #cd3131;
+  --success-color: #008000;
+  --warning-color: #ff8c00;
 }
 * { box-sizing: border-box; }
 html, body {
-  margin: 0;
+  height: 100%;
+  margin: 0 auto;
   padding: 0;
   font-family: 'Fira Code', monospace;
-  background: var(--bg-color);
+  background-color: var(--bg-color);
   color: var(--text-color);
   font-size: 14px;
-  transition: background 0.3s, color 0.3s;
+  line-height: 1.5;
+  transition: background-color 0.3s, color 0.3s;
+  width: 100%;
 }
 .container {
   max-width: 1200px;
-  margin: auto;
+  margin: 0 auto;
   padding: 20px;
 }
-h1, h2 { color: var(--accent-color); }
+h1, h2, h3 {
+  color: var(--accent-color);
+  margin-bottom: 15px;
+}
 .top-bar {
-  background: var(--secondary-color);
+  background-color: var(--secondary-color);
   padding: 10px;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 .search-bar {
   display: flex;
   align-items: center;
-  background: var(--bg-color);
+  background-color: var(--bg-color);
   border-radius: 4px;
   padding: 5px 10px;
-  flex: 1;
+  margin-bottom: 10px;
+  width: 100%;
 }
 .search-bar input {
   background: none;
   border: none;
   color: var(--text-color);
-  width: 100%;
+  font-family: 'Fira Code', monospace;
+  font-size: 14px;
   outline: none;
+  width: 100%;
 }
-.dropdown {
-  position: relative;
+.search-bar img {
+  margin-right: 10px;
 }
-.dropbtn {
-  background: var(--primary-color);
-  border: none;
-  color: var(--text-color);
-  padding: 8px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background: var(--secondary-color);
-  border-radius: 4px;
-  overflow: hidden;
-  min-width: 200px;
-}
-.dropdown-content a {
-  display: block;
-  padding: 10px;
-  text-decoration: none;
-  color: var(--text-color);
-}
-.dropdown:hover .dropdown-content { display: block; }
 .tool-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
 }
 .tool-card {
-  background: var(--secondary-color);
-  padding: 20px;
+  background-color: var(--secondary-color);
   border-radius: 8px;
+  padding: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
-  transition: transform .3s, box-shadow .3s;
+  position: relative;
+  overflow: hidden;
 }
 .tool-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
-.tool-icon { font-size: 40px; }
-.tool-name { font-weight: bold; margin: 10px 0; }
-.tool-description { font-size: 12px; opacity: 0.8; }
+.tool-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+.tool-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.tool-description {
+  font-size: 12px;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+.tool-tags {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.tool-tag {
+  background-color: var(--primary-color);
+  color: var(--bg-color);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin-top: 10px;
+}
+.dropbtn {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--secondary-color);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  width: 100%;
+}
+.dropdown-content a {
+  color: var(--text-color);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content a:hover {
+  background-color: var(--primary-color);
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown:hover .dropbtn {
+  background-color: #005999;
+}
 .category-filter {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin: 20px 0;
+  margin-bottom: 20px;
 }
 .category-btn {
-  background: var(--secondary-color);
+  background-color: var(--secondary-color);
+  color: var(--text-color);
   border: none;
-  padding: 6px 12px;
+  padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s;
+  flex: 1 0 auto;
+  margin-bottom: 5px;
 }
-.category-btn.active { background: var(--primary-color); }
+.category-btn.active {
+  background-color: var(--primary-color);
+}
 .notification {
   position: fixed;
-  top: 20px; left: 50%;
+  top: 20px;
+  left: 50%;
   transform: translateX(-50%);
-  background: var(--warning-color);
+  background-color: var(--warning-color);
   color: var(--bg-color);
-  padding: 8px 15px;
+  padding: 10px 20px;
   border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
   display: none;
+}
+.section-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--accent-color);
+  padding-bottom: 10px;
+}
+.discord-btn {
+  display: flex;
+  align-items: center;
+  background-color: #7289DA;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+.discord-btn:hover {
+  background-color: #5a6eaf;
+}
+.discord-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+}
+#ingenuity-engine {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--secondary-color);
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   z-index: 1000;
 }
-.page-switcher { text-align: center; margin: 20px 0; }
+#ingenuity-score {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+.development-banner {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--warning-color);
+  color: var(--bg-color);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.page-switcher {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .page-switcher button {
-  background: var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--text-color);
   border: none;
-  padding: 6px 12px;
+  padding: 5px 10px;
   margin: 0 5px;
   border-radius: 4px;
-  color: var(--text-color);
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
-@media (max-width: 600px) {
-  .tool-grid { grid-template-columns: 1fr; }
+.page-switcher button:disabled {
+  background-color: var(--secondary-color);
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  .tool-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  .tool-card {
+    padding: 15px;
+  }
+  .tool-icon {
+    font-size: 36px;
+  }
+  .category-filter {
+    flex-direction: column;
+  }
+  .category-btn {
+    width: 100%;
+  }
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .discord-btn {
+    margin-top: 10px;
+  }
 }
 </style>
 </head>
@@ -151,112 +306,373 @@ h1, h2 { color: var(--accent-color); }
 <div class="container">
   <div class="top-bar">
     <div class="search-bar">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Magnifying_glass_icon.svg" alt="" width="20">
-      <input type="text" id="search-input" placeholder="LOCALIZAR APLICAÇÃO..." aria-label="Pesquisar ferramentas">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Magnifying_glass_icon.svg" alt="Search" width="20" height="20">
+      <input type="text" id="search-input" placeholder="LOCALIZAR APLICAÇÃO...">
     </div>
     <div class="dropdown">
       <button class="dropbtn">Temas</button>
       <div class="dropdown-content">
         <a href="#" id="theme-toggle">Alternar tema</a>
-        <a href="#" id="font-size-increase">Aumentar fonte</a>
-        <a href="#" id="font-size-decrease">Diminuir fonte</a>
+        <a href="#" id="font-size-increase">Aumentar o tamanho da fonte</a>
+        <a href="#" id="font-size-decrease">Diminuir o tamanho da fonte</a>
       </div>
     </div>
   </div>
-
+  
+<center>
   <h1>Adestramento GeoInt-2025</h1>
   <h1>Página de Links GeoInt-2025</h1>
 
   <div class="category-filter">
     <button class="category-btn active" data-category="all">Todos</button>
-    <button class="category-btn" data-category="devops">Mapas Facilitadores</button>
-    <button class="category-btn" data-category="ep">Edit Texto - HTML</button>
-    <button class="category-btn" data-category="porto">Dados Porto-RJ</button>
+    <button class="category-btn" data-category="devops">MAPAS FACILITADORES</button>
+	<button class="category-btn" data-category="ep">EDIT TEXTO - HTML</button>
+    <button class="category-btn" data-category="porto">DADOS PORTO-RJ</button>
+   
   </div>
 
-  <div class="tool-grid" id="tool-grid"></div>
+  <div class="tool-grid" id="tool-grid">
+    <!-- Tool cards will be dynamically populated here -->
+  </div>
 
   <div class="page-switcher">
     <button id="prev-page" disabled>Anterior</button>
-    <span id="page-indicator">Página 1</span>
-    <button id="next-page">Próxima</button>
+    <span id="page-indicator">Page 1 of 1</span>
+    <button id="next-page">Proxima</button>
   </div>
 
   <div class="section-header">
     <h2>TURMA AZIMUTE</h2>
-    <button class="discord-btn" onclick="window.open('https://web.whatsapp.com/', '_blank')">
+    <button class="discord-btn">
       WHATSAPP WEB
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZo-AN0SdKFpcU5RGb0SE7mo-tTE51UkgRXnXaTmEzgfGeAQE53m5MQ3OpW3UKVlYrnFM&usqp=CAU" alt="Discord" class="discord-icon">
     </button>
+   
   </div>
-</div>
 
-<div class="notification" id="notification"></div>
+ <div class="notification" id="notification"></div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const tools = [
-    {icon:"🧿", name:"GOOGLE EARTH", description:"Abrir arquivos .KML", category:"devops", url:"https://earth.google.com/web/@-22.83258235,-43.15240885"},
-    {icon:"🔗", name:"Wikimapia", description:"Mapa editável online", category:"devops", url:"https://wikimapia.org"},
-    {icon:"🕵‍♂️", name:"Mapa das Facções RJ", description:"Mapa das facções", category:"devops", url:"https://www.google.com/maps/d/viewer?mid=1lnMoFlzrZEwwlsqdNuPDPUtnoIUGBbU"},
-    {icon:"💻", name:"CKEditor", description:"Editor HTML online", category:"ep", url:"https://onlinehtmleditor.dev"},
-    {icon:"🤖", name:"Porto do Rio de Janeiro - PDZ", description:"Plano de Zoneamento", category:"porto", url:"https://www.portosrio.gov.br/pt-br/negocios/pdz/riopor"},
-  ];
-
+document.addEventListener('DOMContentLoaded', function() {
   const searchInput = document.getElementById('search-input');
   const toolGrid = document.getElementById('tool-grid');
-  const categoryBtns = document.querySelectorAll('.category-btn');
+  const categoryButtons = document.querySelectorAll('.category-btn');
+  const themeToggle = document.getElementById('theme-toggle');
+  const fontSizeIncrease = document.getElementById('font-size-increase');
+  const fontSizeDecrease = document.getElementById('font-size-decrease');
   const notification = document.getElementById('notification');
-  const prevBtn = document.getElementById('prev-page');
-  const nextBtn = document.getElementById('next-page');
+  const ingenuityScore = document.getElementById('ingenuity-score');
+  const prevPageBtn = document.getElementById('prev-page');
+  const nextPageBtn = document.getElementById('next-page');
   const pageIndicator = document.getElementById('page-indicator');
 
-  let filtered = tools;
-  let page = 1;
-  const perPage = 8;
+  const toolsPerPage = 8;
+  let currentPage = 1;
+  let filteredTools = [];
 
-  const render = () => {
+  const tools = [ 
+    {
+      icon: "️🧿️",
+      name: "GOOGLE EARTH",
+      description: "Abri arquivos .KML",
+      category: "devops",
+      tags: [],
+      url: "https://earth.google.com/web/@-22.83258235,-43.15240885,0.38257103a,46367.22610126d,30y,0h,0t,0r/data=CgRCAggBOgMKATBCAggASg0I____________ARAA",
+      needsDevelopment: false
+    },
+	
+    {
+     
+      icon: "🔗",
+      name: "wikimapia.org",
+      description: "Wikimapia é um mapa editável online - você pode descrever qualquer lugar da Terra. Ou apenas navegue no mapa descobrindo toneladas de lugares já marcados.",
+      category: "devops",
+      tags: [],
+      url: "https://wikimapia.org/#lang=pt&lat=-22.900000&lon=-43.233300&z=12&m=w",
+      needsDevelopment: false
+      
+    },
+    {
+      icon: "🧿️",
+      name: "OpenStreetMap",
+      description: "O OpenStreetMap é um mapa do mundo, criado por pessoas como você e de uso livre sob uma licença aberta.",
+      category: "devops",
+      tags: [],
+      url: "https://www.openstreetmap.org/#map=16/-22.80957/-43.29635",
+      needsDevelopment: false
+    },
+	  
+	  {
+      icon:  "🤷‍♂️️",
+      name: "Overpass Turbo",
+      description: "Uma ferramenta de mineração de dados baseada na web para OpenStreetMap que executa qualquer tipo de consulta da API Overpass e mostra os resultados em um mapa interativo.",
+      category: "devops",
+      tags: [],
+      url: "https://overpass-turbo.eu/",
+      needsDevelopment: false
+    },
+	  
+    {
+      icon: "⏮️",
+      name: "WiKi OpenSteetMap",
+      description: "buscar no catalago do overpass, sabendo que a extração é no assistente.",
+      category: "devops",
+      tags: [],
+      url: "https://wiki.openstreetmap.org/wiki/Pt:Map_Features",
+      needsDevelopment: false
+    },
+    {
+      icon: "🤖️",
+      name: "Baixar o KML",
+      description: "Arquivo KML do wikimapia.org/ge.kml",
+      category: "devops",
+      tags: [],
+      url: "https://wikimapia.org/ge.kml",
+      needsDevelopment: false
+    },      
+	  
+	{
+      icon: "🕵‍♂️️",
+      name: "Mapa das Facções RJ",
+      description: "Mapa das facções do estado do Rio de Janeiro",
+      category: "devops",
+      tags: [],
+      url: "https://www.google.com/maps/d/u/0/viewer?mid=1lnMoFlzrZEwwlsqdNuPDPUtnoIUGBbU&g_ep=CAESCjExLjEyMC4xMDIYACDdYioSLDQ3MDc1OTE1LDQ3MDg0MzkzQgJCUg%3D%3D&shorturl=1&ll=-22.93721881592618%2C-43.16550334581837&z=13",
+      needsDevelopment: false
+    },
+	   
+	{
+      icon: "🕵‍♂️️",
+      name: "IBGE",
+      description: "Instituto Brasileiro de Geografia e Estatística",
+      category: "devops",
+      tags: [],
+      url: "https://www.ibge.gov.br/geociencias/organizacao-do-territorio/malhas-territoriais.html",
+      needsDevelopment: false
+    },
+	   
+    {
+      icon: "💻️",
+      name: "CKEditor",
+      description: "Editor HTML online",
+      category: "ep",
+      tags: [],
+      url: "https://onlinehtmleditor-dev.translate.goog/?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt&_x_tr_pto=tc",
+      needsDevelopment: false
+    },
+	
+	{
+      icon: "💻️",
+      name: "Web editor de texto HTML",
+      description: " Online é um serviço web gratuito que lhe permite editar e visualizar código HTML tão facilmente como com qualquer editor de texto.",
+      category: "ep",
+      tags: [],
+      url: "https://editorhtmlonline.com/pt/",
+      needsDevelopment: false
+    },
+	
+	{
+      icon: "💻️",
+      name: "Clevert",
+      description: "Use o editor WYSIWYG para obter o código HTML que você precisa. Basta digitar e formatar o seu conteúdo conforme desejado abaixo usando as ferramentas fornecidas.",
+      category: "ep",
+      tags: [],
+      url: "https://editorhtmlonline.clevert.com.br/html.php",
+      needsDevelopment: false
+    },
+    
+   {
+      icon: "🔍️",
+      name: "Diretoria de Hidrografia da Marinha (DHN)/Centro de Hidrografia da Marinha (CHM)",
+      description: "As Cartas Raster disponibilizadas gratuitamente pela Diretoria de Hidrografia da Marinha (DHN)/Centro de Hidrografia da Marinha (CHM)",
+      category: "analytics",
+      tags: [],
+      url: "https://www.marinha.mil.br/chm/dados-do-segnav/cartas-raster",
+      needsDevelopment: false
+    },
+    
+       {
+      icon:  "🦲️",
+      name: "Cartografia Digital",
+      description: "O Blog Geografia e Cartografia Digital é uma plataforma que visa destacar as potencialidades, aplicações e breves discussões das duas ciências voltados à reflexão.",
+      category: "analytics",
+      tags: [],
+      url: "https://geocartografiadigital.blogspot.com/",
+      needsDevelopment: false
+    },
+          
+    {
+      icon: "🤖️",
+      name: "Porto do Rio de Janeiro - PDZ",
+      description: "Solução de problemas",
+      category: "porto",
+      tags: [],
+      url: "https://www.portosrio.gov.br/pt-br/negocios/pdz/riopor",
+      needsDevelopment: false
+    },
+      {
+      icon: "🤖️",
+      name: "PDZ pdf",
+      description: "PLANO DE DESENVOLVIMENTO E ZONEAMENTO PORTUÁRIO PORTO DO RIO DE JANEIRO",
+      category: "porto",
+      tags: [],
+      url: "https://www.portosrio.gov.br/sites/default/files/inline-files/pdz_-_2016_do_porto_do_rio_de_janeiro.pdf",
+      needsDevelopment: false
+    },
+	
+	];
+
+  function renderTools() {
+    const startIndex = (currentPage - 1) * toolsPerPage;
+    const endIndex = startIndex + toolsPerPage;
+    const currentTools = filteredTools.slice(startIndex, endIndex);
+
     toolGrid.innerHTML = '';
-    const start = (page-1)*perPage;
-    filtered.slice(start, start+perPage).forEach(t => {
+    currentTools.forEach(tool => {
       const card = document.createElement('div');
       card.className = 'tool-card';
-      card.setAttribute('tabindex','0');
-      card.dataset.url = t.url;
-      card.innerHTML = `<div class="tool-icon">${t.icon}</div>
-                        <div class="tool-name">${t.name}</div>
-                        <div class="tool-description">${t.description}</div>`;
+      card.dataset.category = tool.category;
+      if (tool.url) {
+        card.dataset.url = tool.url;
+      }
+
+      card.innerHTML = `
+        <div class="tool-icon">${tool.icon}</div>
+        <div class="tool-name">${tool.name}</div>
+        <div class="tool-description">${tool.description}</div>
+        <div class="tool-tags">
+          ${tool.tags.map(tag => `<span class="tool-tag">${tag}</span>`).join('')}
+        </div>
+        ${tool.needsDevelopment ? '<div class="development-banner">In Development</div>' : ''}
+      `;
+
       toolGrid.appendChild(card);
     });
-    pageIndicator.textContent = `Página ${page} de ${Math.ceil(filtered.length/perPage)}`;
-    prevBtn.disabled = page === 1;
-    nextBtn.disabled = page === Math.ceil(filtered.length/perPage);
-    tippy('.tool-card', {content: el => el.querySelector('.tool-name').textContent, theme:'light'});
-  };
 
-  searchInput.addEventListener('input', () => {
-    const term = searchInput.value.toLowerCase();
-    filtered = tools.filter(t => t.name.toLowerCase().includes(term) || t.description.toLowerCase().includes(term));
-    page = 1; render();
+    updatePageIndicator();
+  }
+
+  function updatePageIndicator() {
+    const totalPages = Math.ceil(filteredTools.length / toolsPerPage);
+    pageIndicator.textContent = `Page ${currentPage} of ${totalPages}`;
+    prevPageBtn.disabled = currentPage === 1;
+    nextPageBtn.disabled = currentPage === totalPages;
+  }
+
+  function filterTools(category = 'all', searchTerm = '') {
+    filteredTools = tools.filter(tool => {
+      const categoryMatch = category === 'all' || tool.category.includes(category);
+      const searchMatch = tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          tool.description.toLowerCase().includes(searchTerm.toLowerCase());
+      return categoryMatch && searchMatch;
+    });
+    currentPage = 1;
+    renderTools();
+  }
+
+  // Search functionality
+  searchInput.addEventListener('input', function() {
+    filterTools(document.querySelector('.category-btn.active').dataset.category, this.value);
   });
 
-  categoryBtns.forEach(btn => btn.addEventListener('click', () => {
-    categoryBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const cat = btn.dataset.category;
-    filtered = cat === 'all' ? tools : tools.filter(t => t.category === cat);
-    page = 1; render();
-  }));
+  // Category filter
+  categoryButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      categoryButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+      filterTools(this.dataset.category, searchInput.value);
+    });
+  });
 
-  prevBtn.addEventListener('click', () => { if(page>1){ page--; render(); }});
-  nextBtn.addEventListener('click', () => { if(page < Math.ceil(filtered.length/perPage)){ page++; render(); }});
+  // Theme toggle
+  themeToggle.addEventListener('click', function(e) {
+    e.preventDefault();
+    document.body.classList.toggle('light-mode');
+    showNotification('Tema Alterado');
+  });
 
-  toolGrid.addEventListener('click', e => {
+  // Font size adjustment
+  let currentFontSize = 14;
+  fontSizeIncrease.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (currentFontSize < 20) {
+      currentFontSize += 2;
+      document.body.style.fontSize = `${currentFontSize}px`;
+      showNotification('Fonte Alterada com Sucesso');
+    }
+  });
+
+  fontSizeDecrease.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (currentFontSize > 10) {
+      currentFontSize -= 2;
+      document.body.style.fontSize = `${currentFontSize}px`;
+      showNotification('Tamanho Alterado com Sucesso');
+    }
+  });
+
+  // Notification function
+  function showNotification(message) {
+    notification.textContent = message;
+    notification.style.display = 'block';
+    setTimeout(() => {
+      notification.style.display = 'none';
+    }, 3000);
+  }
+
+  // Tool card click handler
+  toolGrid.addEventListener('click', function(e) {
     const card = e.target.closest('.tool-card');
-    if(card?.dataset.url) window.open(card.dataset.url, '_blank');
+    if (card) {
+      const toolName = card.querySelector('.tool-name').textContent;
+      const toolUrl = card.dataset.url;
+      if (toolUrl) {
+        window.open(toolUrl, '_blank');
+      } else {
+        showNotification(`${toolName} is currently in development.`);
+      }
+    }
   });
 
-  render();
+  // Page switching
+  prevPageBtn.addEventListener('click', function() {
+    if (currentPage > 1) {
+      currentPage--;
+      renderTools();
+    }
+  });
+
+  nextPageBtn.addEventListener('click', function() {
+    if (currentPage < Math.ceil(filteredTools.length / toolsPerPage)) {
+      currentPage++;
+      renderTools();
+    }
+  });
+
+  // Initialize tooltips
+  function initTooltips() {
+    tippy('.tool-card', {
+      content(reference) {
+        const name = reference.querySelector('.tool-name').textContent;
+        const description = reference.querySelector('.tool-description').textContent;
+        return `<strong>${name}</strong><br>${description}`;
+      },
+      allowHTML: true,
+      theme: 'light',
+      placement: 'top',
+      arrow: true,
+    });
+  }
+
+  // Discord button click handler
+  document.querySelector('.discord-btn').addEventListener('click', function() {
+    window.open('https://web.whatsapp.com/', '_blank');
+     });
+    
+
+  // Initial render
+  filterTools();
+  initTooltips();
 });
 </script>
-</body>
-</html>
+</body></html>
