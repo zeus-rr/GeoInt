@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpInfo - GeoInt 2025</title>
+<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light.css">
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-color: #1e1e1e;
+  --text-color: #d4d4d4;
+  --primary-color: #007acc;
+  --secondary-color: #252526;
+  --accent-color: #569cd6;
+  --warning-color: #ce9178;
+}
+body.light-mode {
+  --bg-color: #fff;
+  --text-color: #000;
+  --secondary-color: #f3f3f3;
+  --accent-color: #0000ff;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Fira Code', monospace;
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: 14px;
+  transition: background 0.3s, color 0.3s;
+}
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+h1, h2 { color: var(--accent-color); }
+.top-bar {
+  background: var(--secondary-color);
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--bg-color);
+  border-radius: 4px;
+  padding: 5px 10px;
+  flex: 1;
+}
+.search-bar input {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  width: 100%;
+  outline: none;
+}
+.dropdown {
+  position: relative;
+}
+.dropbtn {
+  background: var(--primary-color);
+  border: none;
+  color: var(--text-color);
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: var(--secondary-color);
+  border-radius: 4px;
+  overflow: hidden;
+  min-width: 200px;
+}
+.dropdown-content a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: var(--text-color);
+}
+.dropdown:hover .dropdown-content { display: block; }
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+  gap: 20px;
+}
+.tool-card {
+  background: var(--secondary-color);
+  padding: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform .3s, box-shadow .3s;
+}
+.tool-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.tool-icon { font-size: 40px; }
+.tool-name { font-weight: bold; margin: 10px 0; }
+.tool-description { font-size: 12px; opacity: 0.8; }
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
+.category-btn {
+  background: var(--secondary-color);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.category-btn.active { background: var(--primary-color); }
+.notification {
+  position: fixed;
+  top: 20px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--warning-color);
+  color: var(--bg-color);
+  padding: 8px 15px;
+  border-radius: 4px;
+  display: none;
+  z-index: 1000;
+}
+.page-switcher { text-align: center; margin: 20px 0; }
+.page-switcher button {
+  background: var(--primary-color);
+  border: none;
+  padding: 6px 12px;
+  margin: 0 5px;
+  border-radius: 4px;
+  color: var(--text-color);
+}
+@media (max-width: 600px) {
+  .tool-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="top-bar">
+    <div class="search-bar">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Magnifying_glass_icon.svg" alt="" width="20">
+      <input type="text" id="search-input" placeholder="LOCALIZAR APLICAÇÃO..." aria-label="Pesquisar ferramentas">
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Temas</button>
+      <div class="dropdown-content">
+        <a href="#" id="theme-toggle">Alternar tema</a>
+        <a href="#" id="font-size-increase">Aumentar fonte</a>
+        <a href="#" id="font-size-decrease">Diminuir fonte</a>
+      </div>
+    </div>
+  </div>
+
+  <h1>Adestramento GeoInt-2025</h1>
+  <h1>Página de Links GeoInt-2025</h1>
+
+  <div class="category-filter">
+    <button class="category-btn active" data-category="all">Todos</button>
+    <button class="category-btn" data-category="devops">Mapas Facilitadores</button>
+    <button class="category-btn" data-category="ep">Edit Texto - HTML</button>
+    <button class="category-btn" data-category="porto">Dados Porto-RJ</button>
+  </div>
+
+  <div class="tool-grid" id="tool-grid"></div>
+
+  <div class="page-switcher">
+    <button id="prev-page" disabled>Anterior</button>
+    <span id="page-indicator">Página 1</span>
+    <button id="next-page">Próxima</button>
+  </div>
+
+  <div class="section-header">
+    <h2>TURMA AZIMUTE</h2>
+    <button class="discord-btn" onclick="window.open('https://web.whatsapp.com/', '_blank')">
+      WHATSAPP WEB
+    </button>
+  </div>
+</div>
+
+<div class="notification" id="notification"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const tools = [
+    {icon:"🧿", name:"GOOGLE EARTH", description:"Abrir arquivos .KML", category:"devops", url:"https://earth.google.com/web/@-22.83258235,-43.15240885"},
+    {icon:"🔗", name:"Wikimapia", description:"Mapa editável online", category:"devops", url:"https://wikimapia.org"},
+    {icon:"🕵‍♂️", name:"Mapa das Facções RJ", description:"Mapa das facções", category:"devops", url:"https://www.google.com/maps/d/viewer?mid=1lnMoFlzrZEwwlsqdNuPDPUtnoIUGBbU"},
+    {icon:"💻", name:"CKEditor", description:"Editor HTML online", category:"ep", url:"https://onlinehtmleditor.dev"},
+    {icon:"🤖", name:"Porto do Rio de Janeiro - PDZ", description:"Plano de Zoneamento", category:"porto", url:"https://www.portosrio.gov.br/pt-br/negocios/pdz/riopor"},
+  ];
+
+  const searchInput = document.getElementById('search-input');
+  const toolGrid = document.getElementById('tool-grid');
+  const categoryBtns = document.querySelectorAll('.category-btn');
+  const notification = document.getElementById('notification');
+  const prevBtn = document.getElementById('prev-page');
+  const nextBtn = document.getElementById('next-page');
+  const pageIndicator = document.getElementById('page-indicator');
+
+  let filtered = tools;
+  let page = 1;
+  const perPage = 8;
+
+  const render = () => {
+    toolGrid.innerHTML = '';
+    const start = (page-1)*perPage;
+    filtered.slice(start, start+perPage).forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'tool-card';
+      card.setAttribute('tabindex','0');
+      card.dataset.url = t.url;
+      card.innerHTML = `<div class="tool-icon">${t.icon}</div>
+                        <div class="tool-name">${t.name}</div>
+                        <div class="tool-description">${t.description}</div>`;
+      toolGrid.appendChild(card);
+    });
+    pageIndicator.textContent = `Página ${page} de ${Math.ceil(filtered.length/perPage)}`;
+    prevBtn.disabled = page === 1;
+    nextBtn.disabled = page === Math.ceil(filtered.length/perPage);
+    tippy('.tool-card', {content: el => el.querySelector('.tool-name').textContent, theme:'light'});
+  };
+
+  searchInput.addEventListener('input', () => {
+    const term = searchInput.value.toLowerCase();
+    filtered = tools.filter(t => t.name.toLowerCase().includes(term) || t.description.toLowerCase().includes(term));
+    page = 1; render();
+  });
+
+  categoryBtns.forEach(btn => btn.addEventListener('click', () => {
+    categoryBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.dataset.category;
+    filtered = cat === 'all' ? tools : tools.filter(t => t.category === cat);
+    page = 1; render();
+  }));
+
+  prevBtn.addEventListener('click', () => { if(page>1){ page--; render(); }});
+  nextBtn.addEventListener('click', () => { if(page < Math.ceil(filtered.length/perPage)){ page++; render(); }});
+
+  toolGrid.addEventListener('click', e => {
+    const card = e.target.closest('.tool-card');
+    if(card?.dataset.url) window.open(card.dataset.url, '_blank');
+  });
+
+  render();
+});
+</script>
+</body>
+</html>
